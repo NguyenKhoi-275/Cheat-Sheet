@@ -1,139 +1,127 @@
 const data=[
 
 
-{
-title:"🐙 Git",
-
-cmd:[
-
-["git status","Check trạng thái"],
-
-["git add .","Add code"],
-
-["git commit -m msg","Commit"],
-
-["git push","Push Github"],
-
-["git pull","Update code"]
-
-]
-
-},
+["🐧 Linux",[
+["ls -la","Xem file"],
+["cd folder","Vào thư mục"],
+["mkdir app","Tạo folder"],
+["rm -rf file","Xóa"],
+["top","Xem process"]
+]],
 
 
 
-{
-title:"🟢 NodeJS / NPM",
-
-cmd:[
-
-["node -v","Node version"],
-
-["npm install","Install package"],
-
-["npm run dev","Run project"],
-
-["npm build","Build app"],
-
-["npm test","Test code"]
-
-]
-
-},
+["🐙 Git",[
+["git status","Kiểm tra"],
+["git add .","Thêm file"],
+["git commit -m msg","Lưu code"],
+["git push","Đẩy Github"],
+["git pull","Kéo code"]
+]],
 
 
 
-{
-title:"🐳 Docker",
-
-cmd:[
-
-["docker ps","List container"],
-
-["docker images","Images"],
-
-["docker build","Build"],
-
-["docker logs id","Logs"],
-
-["docker stop id","Stop"]
-
-]
-
-},
+["🟢 NodeJS",[
+["node app.js","Chạy JS"],
+["npm install","Cài package"],
+["npm run dev","Dev server"],
+["npm build","Build"]
+]],
 
 
 
-{
-title:"☸ Kubernetes",
-
-cmd:[
-
-["kubectl get pods","Show pods"],
-
-["kubectl logs pod","Logs"],
-
-["kubectl apply -f yaml","Deploy"]
-
-]
-
-},
+["🐍 Python",[
+["python main.py","Chạy file"],
+["pip install package","Cài thư viện"],
+["python -m venv env","Tạo môi trường"],
+["pip list","Xem package"],
+["pip freeze","Export package"]
+]],
 
 
 
-
-{
-title:"🐧 Linux",
-
-cmd:[
-
-["ls -la","List file"],
-
-["cd folder","Move"],
-
-["mkdir app","Create folder"],
-
-["rm file","Delete"],
-
-["top","System monitor"]
-
-]
-
-}
+["☕ Java",[
+["javac Main.java","Compile"],
+["java Main","Chạy chương trình"],
+["jar cvf app.jar","Tạo jar"],
+["java -version","Xem version"]
+]],
 
 
+
+["🟨 JavaScript",[
+["node file.js","Chạy JS"],
+["console.log()","In ra màn hình"],
+["npm init","Tạo project"],
+["npm install","Cài module"]
+]],
+
+
+
+["🐳 Docker",[
+["docker ps","Xem container"],
+["docker build","Build image"],
+["docker run","Chạy container"],
+["docker logs id","Xem log"]
+]],
+
+
+
+["☸ Kubernetes",[
+["kubectl get pods","Xem pod"],
+["kubectl logs pod","Log"],
+["kubectl apply -f file.yaml","Deploy"]
+]],
+
+
+
+["⚡ Terminal",[
+["history","Lịch sử"],
+["clear","Xóa màn hình"],
+["man command","Hướng dẫn"],
+["Ctrl + C","Dừng lệnh"]
+]]
 
 ];
 
 
 
-let app=document.querySelector("#app");
+const app=document.querySelector("#app");
 
 
 
-function load(search=""){
+function render(find=""){
 
 
 app.innerHTML="";
 
 
-data.forEach(x=>{
+data.forEach(d=>{
 
 
 let html=`
 
-<div class="card">
+<div class="section">
 
-<h2>${x.title}</h2>
+<div class="box">
+
+
+<div class="title">
+
+${d[0]}
+
+</div>
 
 `;
 
 
 
-x.cmd.forEach(c=>{
+d[1].forEach(c=>{
 
 
-if(c[0].includes(search)){
+if(c[0]
+.toLowerCase()
+.includes(find.toLowerCase())){
 
 
 html+=`
@@ -142,18 +130,17 @@ html+=`
 
 ${c[0]}
 
+
 <button onclick="copy('${c[0]}')">
 COPY
 </button>
 
 
-<br>
-
-<small>
+<div class="desc">
 
 ${c[1]}
 
-</small>
+</div>
 
 
 </div>
@@ -167,7 +154,14 @@ ${c[1]}
 
 
 
-html+="</div>";
+html+=`
+
+</div>
+
+</div>
+
+`;
+
 
 
 app.innerHTML+=html;
@@ -179,20 +173,19 @@ app.innerHTML+=html;
 
 
 
-function copy(t){
+function copy(x){
 
-navigator.clipboard.writeText(t);
+navigator.clipboard.writeText(x);
 
 }
 
 
 
-document
-.querySelector("#search")
-.oninput=e=>
+search.oninput=e=>{
 
-load(e.target.value);
+render(e.target.value);
+
+}
 
 
-
-load();
+render();
